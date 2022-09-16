@@ -33,8 +33,18 @@ body {
 
 .score-section {
   display: flex;
+  flex-direction: column;
+  gap: 40px;
   font-size: 24px;
   align-items: center;
+}
+
+.score-section .previousScore {
+  font-size: 15px;
+}
+
+.score-section button {
+  justify-content: center;
 }
 
 /* QUESTION/TIMER/LEFT SECTION */
@@ -106,3 +116,4 @@ button:focus {
 button svg {
   margin-right: 5px;
 }
+
