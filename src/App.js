@@ -43,7 +43,7 @@ export default function App() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [score, setScore] = useState(0);
-  const [scoreHistory, setScoreHistory] = useState([]);
+  const [prevScore, setPrevScore] = useState(false);
 
   const handleAnswerClick = (isCorrect) => {
     if (isCorrect) {
@@ -56,24 +56,24 @@ export default function App() {
     setCurrentQuestion(currentQuestion + 1);
   }
 
-  useEffect(() => {
-    if (isFinished) {
-      setScoreHistory([...scoreHistory, score]);
-    }
-  }, [isFinished])
-
   const handleResetButton = () => {
+    setPrevScore(score);
     setCurrentQuestion(0);
     setIsFinished(false);
-    setScore(0);
   }
+
+  useEffect(() => {
+    if (prevScore) {
+      setScore(0);
+    }
+  }, [prevScore])
 
 	return (
 		<div className='app'>
       {isFinished ? (
         <div className='score-section'>
           <p>You scored {score} out of {questions.length}</p>
-          <p className='previousScore'>Previous score : {scoreHistory.length > 1 ? scoreHistory[scoreHistory.length - 2] : 'None'}</p>
+          <p className='previousScore'>Previous score : {prevScore ? prevScore : 'None'}</p>
           <button onClick={handleResetButton}>Reset</button>
         </div>
 			) : (
