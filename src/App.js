@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 export default function App() {
-	const questions = [
+	let ques = [
 		{
 			questionText: 'What is the capital of France?',
 			answerOptions: [
@@ -38,8 +38,27 @@ export default function App() {
 				{ answerText: '7', isCorrect: true },
 			],
 		},
+		{
+			questionText: "Grand Central Terminal, Park Avenue, New York is the world's",
+			answerOptions: [
+				{ answerText: 'largest railway station', isCorrect: true },
+				{ answerText: 'highest railway station', isCorrect: false },
+				{ answerText: 'longest railway station', isCorrect: false },
+				{ answerText: 'None of the above', isCorrect: false },
+			],
+		},
+		{
+			questionText: "'OS' computer abbreviation usually means",
+			answerOptions: [
+				{ answerText: 'Order of Significance', isCorrect: false },
+				{ answerText: 'Open Software', isCorrect: false },
+				{ answerText: 'Operating System', isCorrect: true },
+				{ answerText: 'Optical Sensor', isCorrect: false },
+			],
+		},
 	];
 
+  const [questions, setQuestions] = useState(ques);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [score, setScore] = useState(0);
@@ -56,7 +75,19 @@ export default function App() {
     setCurrentQuestion(currentQuestion + 1);
   }
 
+  const shuffle = (arr) => {
+    let currentIndex = arr.length, randomIndex;
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+    }
+    return arr;
+  }
+
   const handleResetButton = () => {
+    let newQuestions = shuffle(questions);
+    setQuestions(newQuestions);
     setPrevScore(score);
     setCurrentQuestion(0);
     setIsFinished(false);
